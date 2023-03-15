@@ -8,6 +8,8 @@ import tasks.model.TasksOperations;
 
 import java.util.Date;
 
+import static tasks.utils.Helper.formTimeUnit;
+
 public class TasksService {
 
     private ArrayTaskList tasks;
@@ -26,15 +28,6 @@ public class TasksService {
         minutes = minutes % DateService.MINUTES_IN_HOUR;
         return formTimeUnit(hours) + ":" + formTimeUnit(minutes);//hh:MM
     }
-    public String formTimeUnit(int timeUnit){
-        StringBuilder sb = new StringBuilder();
-        if (timeUnit < 10) sb.append("0");
-        if (timeUnit == 0) sb.append("0");
-        else {
-            sb.append(timeUnit);
-        }
-        return sb.toString();
-    }
 
     public int parseFromStringToSeconds(String stringTime){//hh:MM
         String[] units = stringTime.split(":");
@@ -47,7 +40,6 @@ public class TasksService {
     public Iterable<Task> filterTasks(Date start, Date end){
         TasksOperations tasksOps = new TasksOperations(getObservableList());
         Iterable<Task> filtered = tasksOps.incoming(start,end);
-        //Iterable<Task> filtered = tasks.incoming(start, end);
 
         return filtered;
     }

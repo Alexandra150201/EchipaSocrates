@@ -12,9 +12,12 @@ public class ArrayTaskList extends TaskList{
     private int numberOfTasks;
     private int currentCapacity;
     private static final Logger log = Logger.getLogger(ArrayTaskList.class.getName());
+
+
     private class ArrayTaskListIterator implements Iterator<Task> {
-        private int cursor;
+        private int cursor=0;
         private int lastCalled = -1;
+
         @Override
         public boolean hasNext() {
             return cursor < numberOfTasks;

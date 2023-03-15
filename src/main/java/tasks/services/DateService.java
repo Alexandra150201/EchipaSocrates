@@ -7,16 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static tasks.utils.Helper.formTimeUnit;
+
 public class DateService {
     public static final int SECONDS_IN_MINUTE = 60;
     public static final int MINUTES_IN_HOUR = 60;
     public static final int HOURS_IN_A_DAY = 24;
 
-    private TasksService service;
 
-    public DateService(TasksService service){
-        this.service=service;
-    }
+    public DateService(){}
+
     public static LocalDate getLocalDateValueFromDate(Date date){//for setting to DatePicker - requires LocalDate
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
@@ -42,7 +42,7 @@ public class DateService {
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
 
-        return service.formTimeUnit(hours) + ":" + service.formTimeUnit(minutes);
+        return formTimeUnit(hours) + ":" + formTimeUnit(minutes);
     }
 
 }

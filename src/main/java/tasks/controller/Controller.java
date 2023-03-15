@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import tasks.model.Task;
 import tasks.services.DateService;
-import tasks.services.TaskIO;
+import tasks.utils.TaskIO;
 import tasks.services.TasksService;
 import tasks.view.Main;
 
@@ -34,6 +34,10 @@ public class Controller {
     public static Stage infoStage;
 
     public static TableView mainTable;
+
+
+     private final int  SCENE_WIDTH = 600;
+     private final int  SCENE_HEIGHT = 350;
 
     @FXML
     public  TableView tasks;
@@ -56,7 +60,7 @@ public class Controller {
 
     public void setService(TasksService service){
         this.service=service;
-        this.dateService=new DateService(service);
+        this.dateService=new DateService();
         this.tasksList=service.getObservableList();
         updateCountLabel(tasksList);
         tasks.setItems(tasksList);
@@ -94,7 +98,7 @@ public class Controller {
             editCtrl.setService(service);
             editCtrl.setTasksList(tasksList);
             editCtrl.setCurrentTask((Task)mainTable.getSelectionModel().getSelectedItem());
-            editNewStage.setScene(new Scene(root, 600, 350));
+            editNewStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
             editNewStage.setResizable(false);
             editNewStage.initOwner(Main.primaryStage);
             editNewStage.initModality(Modality.APPLICATION_MODAL);//??????

@@ -11,8 +11,14 @@ import java.util.NoSuchElementException;
 import static java.util.Objects.isNull;
 public class LinkedTaskList  extends TaskList {
     private static final Logger log = Logger.getLogger(LinkedTaskList.class.getName());
+
+    public LinkedTaskList() {
+        this.numberOfTasks = 10;
+//        this.last = null;
+    }
+
     private class LinkedTaskListIterator implements Iterator<Task>{
-        private int cursor;
+        private int cursor=0;
         private int lastCalled = -1;
 
 
@@ -28,7 +34,8 @@ public class LinkedTaskList  extends TaskList {
                 throw new NoSuchElementException("No next element");
             }
             lastCalled = cursor;
-            return getTask(cursor++);
+            cursor++;
+            return getTask(cursor-1);
         }
 
         @Override
@@ -59,17 +66,20 @@ public class LinkedTaskList  extends TaskList {
             throw new NullPointerException("Task is null");
         }
 
-        Node cursor = last;
+        Node lastNode = last;
         if (last.getTask().equals(task)) this.last = last.getLast();
         int tasksToCheck = size();
-        while (tasksToCheck > 0 && !task.equals(cursor.getTask())){
-            cursor = cursor.getLast();
+        while (tasksToCheck > 0 && !task.equals(lastNode.getTask())){
+            lastNode = lastNode.getLast();
             tasksToCheck--;
         }
-        if (isNull(cursor)) return false;
+        if (isNull(lastNode)) return false;
 
-        if (cursor.last!= null) cursor.getLast().setNext(cursor.getNext());
-        if (cursor.next!= null) cursor.getNext().setLast(cursor.getLast());
+        if (lastNode.last!= null) lastNode.getLast().setNext(lastNode.getNext());
+        if (lastNode.next!= null)
+        {
+            lastNode.getNext().setLast(lastNode.getLast());
+        }
 
         numberOfTasks--;
         return true;
@@ -133,10 +143,6 @@ public class LinkedTaskList  extends TaskList {
             return last;
         }
 
-        private void setTask(Task task) {
-            this.task = task;
-        }
-
         private void setLast(Node last) {
             this.last = last;
         }
@@ -145,7 +151,9 @@ public class LinkedTaskList  extends TaskList {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+              return false;
+        }
 
         LinkedTaskList that = (LinkedTaskList) o;
 
