@@ -308,3 +308,9 @@
 2023-03-30 20:16:59 INFO  Controller:80 - Main controller initializing
 2023-03-30 20:17:01 INFO  NewEditController:87 - new/edit window initializing
 2023-03-30 20:17:02 INFO  ErrorController:16 - new/edit window initializing
+2023-03-30 20:27:26 INFO  Main:36 - saved data reading
+2023-03-30 20:27:26 INFO  Main:41 - application start
+2023-03-30 20:27:26 INFO  Controller:80 - Main controller initializing
+2023-03-30 20:27:28 INFO  NewEditController:87 - new/edit window initializing
+2023-03-30 20:27:34 INFO  ErrorController:16 - new/edit window initializing
+2023-03-30 20:27:38 INFO  ErrorController:16 - new/edit window initializing
