@@ -140,7 +140,6 @@ public class NewEditController {
     @FXML
     public void saveChanges(){
         Task collectedFieldsTask = collectFieldsData();
-        System.out.println("asiiiiiiiiiczxc11111111111");
         if (incorrectInputMade) return;
 
         if (currentTask == null){//no task was chosen -> add button was pressed
@@ -165,9 +164,7 @@ public class NewEditController {
     private Task collectFieldsData(){
         incorrectInputMade = false;
         Task result = null;
-        System.out.println("asiiiiiiiiiczxc11111111111");
         try {
-            //System.out.println("asiiiiiiiiiczxc22222222");
             result = makeTask(fieldTitle.getText(), datePickerStart.getValue(), txtFieldTimeStart.getText(), datePickerEnd.getValue(), txtFieldTimeEnd.getText(), fieldInterval.getText(), checkBoxActive.isSelected());
         }
         catch (Exception e){
@@ -191,20 +188,21 @@ public class NewEditController {
         return result;
     }
 
-    private Task makeTask(String title, LocalDate startDate, String startTime, LocalDate endDate, String endTime, String interval, boolean isActive) {
-        Task result;
+    public Task makeTask(String title, LocalDate startDate, String startTime, LocalDate endDate, String endTime, String interval, boolean isActive) {
+        Task result=null;
         Date startDateWithNoTime = dateService.getDateValueFromLocalDate(startDate);//ONLY date!!without time
         Date newStartDate = dateService.getDateMergedWithTime(startTime, startDateWithNoTime);
+        String[] units = startTime.split(":");
+        int hour = Integer.parseInt(units[0]);
 
-        System.out.println("asiiiiiiiiiczxc");
-        if(title.trim().length() == 0)
+        if(title.length() == 0 || title.length()>20)
             throw new IllegalArgumentException("Title should not be empty");
         if(title.trim().length() > 20)
             throw new IllegalArgumentException("Title should not contain more than 20 characters");
-//        if(Integer.valueOf( startTime) < 0 || Integer.valueOf(startTime) > 23 )
-//            throw new IllegalArgumentException("Start time should be between 0 and 23");
+        if(Integer.valueOf( hour) < 0 || Integer.valueOf(hour) > 23 )
+            throw new IllegalArgumentException("Start time should be between 0 and 23");
 
-        if (checkBoxRepeated.isSelected()){
+        if (isActive){
             Date endDateWithNoTime = dateService.getDateValueFromLocalDate(endDate);
             Date newEndDate = dateService.getDateMergedWithTime(endTime, endDateWithNoTime);
             int newInterval = service.parseFromStringToSeconds(interval);
