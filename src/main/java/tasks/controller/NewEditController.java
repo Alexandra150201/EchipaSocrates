@@ -143,6 +143,7 @@ public class NewEditController {
     @FXML
     public void saveChanges(){
         Task collectedFieldsTask = collectFieldsData();
+        System.out.println("asiiiiiiiiiczxc11111111111");
         if (incorrectInputMade) return;
 
         if (currentTask == null){//no task was chosen -> add button was pressed
@@ -167,8 +168,10 @@ public class NewEditController {
     private Task collectFieldsData(){
         incorrectInputMade = false;
         Task result = null;
+        System.out.println("asiiiiiiiiiczxc11111111111");
         try {
-            result = makeTask();
+            System.out.println("asiiiiiiiiiczxc22222222");
+            result = makeTask(fieldTitle.getText(), datePickerStart.getValue(), txtFieldTimeStart.getText(), datePickerEnd.getValue(), txtFieldTimeEnd.getText(), fieldInterval.getText(), checkBoxActive.isSelected());
         }
         catch (RuntimeException e){
             incorrectInputMade = true;
@@ -187,26 +190,37 @@ public class NewEditController {
         return result;
     }
 
-    private Task makeTask(){
+    private Task makeTask(String title, LocalDate startDate, String startTime, LocalDate endDate, String endTime, String interval, boolean isActive) {
         Task result;
-        String newTitle = fieldTitle.getText();
-        Date startDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerStart.getValue());//ONLY date!!without time
-        Date newStartDate = dateService.getDateMergedWithTime(txtFieldTimeStart.getText(), startDateWithNoTime);
+        Date startDateWithNoTime = dateService.getDateValueFromLocalDate(startDate);//ONLY date!!without time
+        Date newStartDate = dateService.getDateMergedWithTime(startTime, startDateWithNoTime);
+
+        System.out.println("asiiiiiiiiiczxc");
+        if(title.trim().length() == 0)
+            throw new IllegalArgumentException("Title should not be empty");
+        if(title.trim().length() > 20)
+            throw new IllegalArgumentException("Title should not contain more than 20 characters");
+//        if(Integer.valueOf(startTime) < 0 || Integer.valueOf(startTime) > 23 )
+//            throw new IllegalArgumentException("Start time should be between 0 and 23");
+//
+//        if(Integer.valueOf(endTime) < 0 || Integer.valueOf(endTime) > 23 )
+//            throw new IllegalArgumentException("End time should be between 0 and 23");
+
         if (checkBoxRepeated.isSelected()){
-            Date endDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerEnd.getValue());
-            Date newEndDate = dateService.getDateMergedWithTime(txtFieldTimeEnd.getText(), endDateWithNoTime);
-            int newInterval = service.parseFromStringToSeconds(fieldInterval.getText());
-            if (newStartDate.after(newEndDate)) throw new IllegalArgumentException("Start date should be before end");
-            result = new Task(newTitle, newStartDate,newEndDate, newInterval);
+            Date endDateWithNoTime = dateService.getDateValueFromLocalDate(endDate);
+            Date newEndDate = dateService.getDateMergedWithTime(endTime, endDateWithNoTime);
+            int newInterval = service.parseFromStringToSeconds(interval);
+            if (newStartDate.after(newEndDate))
+                throw new IllegalArgumentException("Start date should be before end");
+
+            result = new Task(title, newStartDate,newEndDate, newInterval);
         }
         else {
-            result = new Task(newTitle, newStartDate);
+            result = new Task(title, newStartDate);
         }
-        boolean isActive = checkBoxActive.isSelected();
+
         result.setActive(isActive);
         System.out.println(result);
         return result;
     }
-
-
 }
