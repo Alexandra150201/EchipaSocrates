@@ -29,6 +29,7 @@ public class Controller {
     public ObservableList<Task> tasksList;
     TasksService service;
     DateService dateService;
+    ErrorController errorController;
 
     public static Stage editNewStage;
     public static Stage infoStage;
@@ -61,6 +62,7 @@ public class Controller {
     public void setService(TasksService service){
         this.service=service;
         this.dateService=new DateService();
+        this.errorController = new ErrorController();
         this.tasksList=service.getObservableList();
         updateCountLabel(tasksList);
         tasks.setItems(tasksList);
@@ -95,9 +97,11 @@ public class Controller {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/new-edit-task.fxml"));
             Parent root = loader.load();//getClass().getResource("/fxml/new-edit-task.fxml"));
             NewEditController editCtrl = loader.getController();
+
             editCtrl.setService(service);
             editCtrl.setTasksList(tasksList);
             editCtrl.setCurrentTask((Task)mainTable.getSelectionModel().getSelectedItem());
+
             editNewStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
             editNewStage.setResizable(false);
             editNewStage.initOwner(Main.primaryStage);

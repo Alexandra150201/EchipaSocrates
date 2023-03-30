@@ -13,7 +13,7 @@ public class LinkedTaskList  extends TaskList {
     private static final Logger log = Logger.getLogger(LinkedTaskList.class.getName());
 
     public LinkedTaskList() {
-        this.numberOfTasks = 10;
+        this.numberOfTasks = 0;
 //        this.last = null;
     }
 

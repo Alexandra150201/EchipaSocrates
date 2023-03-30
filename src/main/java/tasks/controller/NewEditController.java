@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -170,14 +167,18 @@ public class NewEditController {
         Task result = null;
         System.out.println("asiiiiiiiiiczxc11111111111");
         try {
-            System.out.println("asiiiiiiiiiczxc22222222");
+            //System.out.println("asiiiiiiiiiczxc22222222");
             result = makeTask(fieldTitle.getText(), datePickerStart.getValue(), txtFieldTimeStart.getText(), datePickerEnd.getValue(), txtFieldTimeEnd.getText(), fieldInterval.getText(), checkBoxActive.isSelected());
         }
-        catch (RuntimeException e){
+        catch (Exception e){
             incorrectInputMade = true;
             try {
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/fxml/field-validator.fxml"));
+                Parent root = loader2.load();
+                ErrorController errorController= loader2.getController();
                 Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/field-validator.fxml"));
+                errorController.setLabelValidator(e.getMessage());
+                System.out.println(e.getMessage());
                 stage.setScene(new Scene(root, 350, 150));
                 stage.setResizable(false);
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -200,11 +201,8 @@ public class NewEditController {
             throw new IllegalArgumentException("Title should not be empty");
         if(title.trim().length() > 20)
             throw new IllegalArgumentException("Title should not contain more than 20 characters");
-//        if(Integer.valueOf(startTime) < 0 || Integer.valueOf(startTime) > 23 )
+//        if(Integer.valueOf( startTime) < 0 || Integer.valueOf(startTime) > 23 )
 //            throw new IllegalArgumentException("Start time should be between 0 and 23");
-//
-//        if(Integer.valueOf(endTime) < 0 || Integer.valueOf(endTime) > 23 )
-//            throw new IllegalArgumentException("End time should be between 0 and 23");
 
         if (checkBoxRepeated.isSelected()){
             Date endDateWithNoTime = dateService.getDateValueFromLocalDate(endDate);
@@ -223,4 +221,5 @@ public class NewEditController {
         System.out.println(result);
         return result;
     }
+
 }
