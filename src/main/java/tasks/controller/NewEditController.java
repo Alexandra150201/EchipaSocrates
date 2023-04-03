@@ -190,17 +190,19 @@ public class NewEditController {
 
     public Task makeTask(String title, LocalDate startDate, String startTime, LocalDate endDate, String endTime, String interval, boolean isActive) {
         Task result=null;
-        Date startDateWithNoTime = dateService.getDateValueFromLocalDate(startDate);//ONLY date!!without time
-        Date newStartDate = dateService.getDateMergedWithTime(startTime, startDateWithNoTime);
-        String[] units = startTime.split(":");
-        int hour = Integer.parseInt(units[0]);
 
-        if(title.length() == 0 || title.length()>20)
+        if(title.trim().length() == 0)
             throw new IllegalArgumentException("Title should not be empty");
         if(title.trim().length() > 20)
             throw new IllegalArgumentException("Title should not contain more than 20 characters");
-        if(Integer.valueOf( hour) < 0 || Integer.valueOf(hour) > 23 )
+
+        String[] units = startTime.split(":");
+        int hour = Integer.parseInt(units[0]);
+        if(Integer.valueOf(hour) < 0 || Integer.valueOf(hour) > 23 )
             throw new IllegalArgumentException("Start time should be between 0 and 23");
+
+        Date startDateWithNoTime = dateService.getDateValueFromLocalDate(startDate);//ONLY date!!without time
+        Date newStartDate = dateService.getDateMergedWithTime(startTime, startDateWithNoTime);
 
         if (isActive){
             Date endDateWithNoTime = dateService.getDateValueFromLocalDate(endDate);
