@@ -6,16 +6,25 @@ import java.util.*;
 
 public class TasksOperations {
 
-    public ArrayList<Task> tasks;
+    public ArrayList<Task> tasks = new ArrayList<>();
 
     public TasksOperations(ObservableList<Task> tasksList){
-        tasks=new ArrayList<>();
         tasks.addAll(tasksList);
     }
 
     public TasksOperations(ArrayList<Task> tasksList){
-        tasks=new ArrayList<>();
         tasks.addAll(tasksList);
+    }
+    public TasksOperations(ArrayTaskList tasksList){
+        if(tasksList !=  null) {
+            for (Task t : tasksList) {
+                tasks.add(t);
+            }
+        }
+    }
+
+    public void add(Task t){
+        tasks.add(t);
     }
 
     public Iterable<Task> incoming(Date start, Date end){

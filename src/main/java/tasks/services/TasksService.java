@@ -13,15 +13,12 @@ import static tasks.utils.Helper.formTimeUnit;
 
 public class TasksService {
 
-    private ArrayTaskList tasks;
+    private  TasksOperations repo = null;
 
-    public TasksService(ArrayTaskList tasks){
-        this.tasks = tasks;
+    public TasksService(TasksOperations repo){
+        this.repo=repo;
     }
 
-    public ObservableList<Task> getObservableList(){
-        return FXCollections.observableArrayList(tasks.getAll());
-    }
     public String getIntervalInHours(Task task){
         int seconds = task.getRepeatInterval();
         int minutes = seconds / DateService.SECONDS_IN_MINUTE;
@@ -38,10 +35,17 @@ public class TasksService {
         return result;
     }
 
+    public void add(Task t){
+        repo.add(t);
+    }
+
     public Iterable<Task> filterTasks(Date start, Date end){
-        TasksOperations tasksOps = new TasksOperations(getObservableList());
-        Iterable<Task> filtered = tasksOps.incoming(start,end);
+        Iterable<Task> filtered = repo.incoming(start,end);
 
         return filtered;
+    }
+
+    public ObservableList<Task> getObservableList() {
+        return FXCollections.observableArrayList(repo.tasks);
     }
 }

@@ -48,6 +48,13 @@ public class ArrayTaskList extends TaskList{
         this.tasks = new Task[currentCapacity];
     }
 
+    public ArrayTaskList(List<Task> tasks){
+        this.tasks = (Task[]) Arrays.stream(tasks.toArray()).toArray();
+        numberOfTasks= tasks.size();
+        currentCapacity = 2* numberOfTasks;
+
+    }
+
     @Override
     public Iterator<Task> iterator() {
         return new ArrayTaskListIterator();
