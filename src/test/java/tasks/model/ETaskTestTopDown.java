@@ -13,20 +13,20 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class ETaskTestTopDown {
+public class ETaskTestTopDown {
 
     private TasksService service;
     private TasksOperations repo;
     private Task t1;
     @Test
-    void getTitle() {
+    public void getTitle() {
         service.add(t1);
         assertEquals(service.getObservableList().get(0).getTitle(),"T1");
         assertEquals(repo.tasks.get(0).getTitle(),"T1");
     }
 
     @Test
-    void setTitle() {
+    public void setTitle() {
 
         service.add(t1);
         service.getObservableList().get(0).setTitle("TITLU");
@@ -35,7 +35,7 @@ class ETaskTestTopDown {
     }
 
     @BeforeEach
-    void setUp() throws ParseException {
+    public void setUp() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         t1 = new Task("T1", formatter.parse("21-09-2022"), formatter.parse("24-09-2022"),120, true);
         repo= new TasksOperations(new ArrayList<>(Arrays.asList(t1)));

@@ -14,14 +14,14 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class RTasksOperationsTestTopDown {
+public class RTasksOperationsTestTopDown {
 
     private TasksService service;
     private TasksOperations repo;
     private Task t1;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         t1 = mock(Task.class);
         repo= new TasksOperations(new ArrayList<>(Arrays.asList(t1)));
@@ -31,7 +31,7 @@ class RTasksOperationsTestTopDown {
     }
 
     @Test
-    void add() {
+    public void add() {
         Mockito.when(t1.getTitle()).thenReturn("title");
         service.add(t1);
         Mockito.verify(t1,never()).getTitle();
@@ -39,7 +39,7 @@ class RTasksOperationsTestTopDown {
     }
 
     @Test
-    void incoming() throws ParseException {
+    public void incoming() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Mockito.when(t1.nextTimeAfter(formatter.parse("21-09-2022"))).thenReturn(formatter.parse("22-09-2022"));
         Iterable<Task> tasksfiltered = service.filterTasks(formatter.parse("21-09-2022"),formatter.parse("26-09-2022"));

@@ -7,12 +7,12 @@ import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ETaskTest {
+public class ETaskTest {
 
     private Task t= null;
 
     @Test
-    void getTitle() {
+    public void getTitle() {
         try {
             t= new Task("new task",Task.getDateFormat().parse("2023-02-12 10:10"));
         } catch (ParseException e) {
@@ -23,7 +23,7 @@ class ETaskTest {
     }
 
     @Test
-    void setTitle() {
+    public void setTitle() {
 
         try {
             t= new Task("old task",Task.getDateFormat().parse("2023-02-12 10:10"));
