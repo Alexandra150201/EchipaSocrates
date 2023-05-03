@@ -15,18 +15,18 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class NewEditControllerTest {
-    private DateService dateService=new DateService();
-    private  Date startDateWithNoTime= new Date();
-    private  NewEditController ctrl= new NewEditController();
-    private Date di,di2,di3= new Date();
-    private Date dou,dou2,dou3= new Date();
-    private String titleNotEmptyError;
-    private String moreTitleCharactersError;
-    private String startTimeError;
+public class NewEditControllerTest {
+    public DateService dateService=new DateService();
+    public  Date startDateWithNoTime= new Date();
+    public  NewEditController ctrl= new NewEditController();
+    public Date di,di2,di3= new Date();
+    public Date dou,dou2,dou3= new Date();
+    public String titleNotEmptyError;
+    public String moreTitleCharactersError;
+    public String startTimeError;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         ctrl.setService(new TasksService(null));
         startDateWithNoTime = dateService.getDateValueFromLocalDate(LocalDate.now());
         di =dateService.getDateMergedWithTime("8:00", startDateWithNoTime);
@@ -43,13 +43,13 @@ class NewEditControllerTest {
 
     @Disabled
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
     }
 
     @Test
     @Order(1)
     @DisplayName("Test pt ECP valid")
-    void makeTaskECPvalid() {
+    public void makeTaskECPvalid() {
 
         Task ecpv = new Task("Mancare",di, dou,1800);
 
@@ -62,7 +62,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(2)
-    void makeTaskECPinvalid1() {
+    public void makeTaskECPinvalid1() {
           Task ecpi= new Task("Iesiredupamasaaceastaa",di2, dou2,1800);
           Task t= null;
 
@@ -78,7 +78,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(3)
-    void makeTaskECPinvalid2() {
+    public void makeTaskECPinvalid2() {
         Task ecpi = new Task("",di2, dou2,1800);
         Task t= null;
 
@@ -94,7 +94,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(4)
-    void makeTaskECPinvalid3() {
+    public void makeTaskECPinvalid3() {
         Task ecpi = new Task("Da",di2, dou2,1800);
         Task t= null;
 
@@ -111,7 +111,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(5)
-    void makeTaskBVAvalid1() {
+    public void makeTaskBVAvalid1() {
 
         Task bvav = new Task("A",di3, dou3,1800);
 
@@ -123,7 +123,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(6)
-    void makeTaskBVAvalid2() {
+    public void makeTaskBVAvalid2() {
 
         Task bvav = new Task("Mainemergemacasasasa",di3, dou3,1800);
 
@@ -136,7 +136,7 @@ class NewEditControllerTest {
     @Test
     @RepeatedTest(3)
     @Order(7)
-    void makeTaskBVAinvalid1() {
+    public void makeTaskBVAinvalid1() {
         Task bvai = new Task("",di3, dou3,1800);
         Task t= null;
 
@@ -152,7 +152,7 @@ class NewEditControllerTest {
 
     @Test
     @Order(8)
-    void makeTaskBVAinvalid2() {
+    public void makeTaskBVAinvalid2() {
         Task bvai = new Task("Mainemergemacasasasas",di3, dou3,1800);
         Task t= null;
 
