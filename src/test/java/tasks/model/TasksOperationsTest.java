@@ -16,14 +16,14 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TasksOperationsTest {
+public class TasksOperationsTest {
     private TasksOperations tasksOperations = null;
     private Date di,di2,di3,di4,di5,di6= new Date();
     private Date dou,dou2,dou3,dou4,dou5,dou6= new Date();
     private Task t1, t2, t3, t4, t5;
 
     @BeforeEach
-    void setUp() throws ParseException {
+    public void setUp() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         di = formatter.parse("12-09-2023");
         di2 = formatter.parse("22-09-2022");
@@ -47,14 +47,14 @@ class TasksOperationsTest {
 
     }
 
-    int sizeOfIterable(Iterable<Task> iterable) {
+    public int sizeOfIterable(Iterable<Task> iterable) {
         int counter = 0;
         for (Object i : iterable) { counter++; }
         return counter;
     }
 
     @Test
-    void filterTasksWB1() {
+    public void filterTasksWB1() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasks.add(t1);
         tasks.add(t2);
@@ -64,7 +64,7 @@ class TasksOperationsTest {
     }
 
     @Test
-    void filterTasksWB2() {
+    public void filterTasksWB2() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasksOperations = new TasksOperations(tasks);
         Iterable<Task> result = tasksOperations.incoming(di2, dou2);
@@ -72,7 +72,7 @@ class TasksOperationsTest {
     }
 
     @Test
-    void filterTasksWB3() {
+    public void filterTasksWB3() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasks.add(t1);
         tasksOperations = new TasksOperations(tasks);
@@ -81,7 +81,7 @@ class TasksOperationsTest {
     }
 
     @Test
-    void filterTasksWB4() {
+    public void filterTasksWB4() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasks.add(t3);
         tasks.add(t4);
@@ -91,7 +91,7 @@ class TasksOperationsTest {
     }
 
     @Test
-    void filterTasksWB5() {
+    public void filterTasksWB5() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasks.add(t5);
         tasksOperations = new TasksOperations(tasks);
@@ -100,7 +100,7 @@ class TasksOperationsTest {
     }
 
     @Test
-    void filterTasksWB6() {
+    public void filterTasksWB6() {
         ArrayList<Task> tasks = new ArrayList<Task>();
         tasks.add(t5);
         tasksOperations = new TasksOperations(tasks);
